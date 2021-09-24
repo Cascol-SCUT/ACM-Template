@@ -1,15 +1,6 @@
-#include <iostream>
-#include <algorithm>
-#include <iomanip>
-#include <queue>
-#include<string>
-#include<string.h>
-#include <vector>
-#include <cstdio>
-#include<map>
-#include<cmath>
-typedef long long ll;
-typedef unsigned long long ull;
+#include<bits/stdc++.h>
+using ll = long long;
+using ull = unsigned long long;
 using namespace std;
 const ll mod = 1000000007;
 const int maxN = 1e4 + 15;
@@ -74,7 +65,7 @@ void tarjian(int u)
 			sd[y] = u;
 			vis[y] = 0;
 			if (u == y) break;
-			p[u] += p[y];
+			p[u] += p[y]; // 这个是权值
 		}
 	}
 }
