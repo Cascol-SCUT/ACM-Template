@@ -45,13 +45,13 @@ int solve()
     while(true)
     {
         for(int i=0;i<=n;++i) ine[i]=INF;
-        for(int i=1;i<=m;++i){
+        for(int i=1;i<=m;++i){ // 贪心找到每个点最小的入边
             int u=edge[i].from,v=edge[i].to;
             if(u!=v&&ine[v]>edge[i].w){
                 ine[v]=edge[i].w;pre[v]=u;
             }
         } 
-        for(int i=1;i<=n;++i){
+        for(int i=1;i<=n;++i){ // 某个点没有入边 无解
             if(i!=r&&ine[i]==INF) return -1;
         }
         int cnt=0;
@@ -72,9 +72,9 @@ int solve()
                 for(int u=pre[v];u!=v;u=pre[u]) id[u]=cnt;
             }
         }
-        if(cnt==0) break;
+        if(cnt==0) break; // 当前无环
         for(int i=1;i<=n;++i) if(!id[i]) id[i]=++cnt;
-        for(int i=1;i<=m;++i)
+        for(int i=1;i<=m;++i) // 有环则进行缩点
         {
             int u=edge[i].from,v=edge[i].to;
             edge[i].from=id[u];edge[i].to=id[v];
