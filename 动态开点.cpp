@@ -1,6 +1,4 @@
-#include<iostream>
-#include<algorithm>
-#include<cstring>
+#include<bits/stdc++.h>
 #define maxN 3000005
 #define N 1000000
 #define INF 1000000000

@@ -1,14 +1,4 @@
-#include <iostream>
-#include <algorithm>
-#include <iomanip>
-#include <queue>
-#include<string>
-#include<string.h>
-#include <vector>
-#include <cstdio>
-#include<map>
-#include<cmath>
-#include<unordered_map>
+#include<bits/stdc++.h>
 typedef long long ll;
 typedef unsigned long long ull;
 #define maxN 20005

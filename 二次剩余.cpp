@@ -1,21 +1,5 @@
-#include <iostream>
-#include <algorithm>
-#include <iomanip>
-#include <queue>
-#include<string>
-#include<string.h>
-#include <vector>
-#include <cstdio>
-#include<map>
-#include<cmath>
+#include<bits/stdc++.h>
 typedef long long ll;
-typedef long double ld;
-typedef unsigned long long ull;
-#define maxN 100005
-#define maxK 10000005
-#define mod 1000000007
-#define INF 0x3f3f3f3f
-#define eps 1e-6
 using namespace std;
 #define int long long
 ll n,p,ii;
@@ -28,12 +12,12 @@ ll sub(ll x,ll y){
 ll mul(ll x,ll y){
     return x*y%p;
 }
-struct comp{
-	long long x,y;
-	comp (long long xx=0,long long yy=0){ x=xx; y=yy; return ;}
-};
+// struct comp{
+// 	long long x,y;
+// 	comp (long long xx=0,long long yy=0){ x=xx; y=yy; return ;}
+// };
 
-comp operator *(comp a,comp b){return comp(add(mul(a.x,b.x),mul(a.y,mul(b.y,ii))),add(mul(a.x,b.y),mul(a.y,b.x)));}
+// comp operator *(comp a,comp b){return comp(add(mul(a.x,b.x),mul(a.y,mul(b.y,ii))),add(mul(a.x,b.y),mul(a.y,b.x)));}
 
 ll qp(ll a,ll b)
 {
@@ -84,6 +68,24 @@ void solve()
         if(n==0) cout<<0<<endl;
         else if(qp(n,(p-1)/2)==p-1) cout<<"Hola!\n";
         else Cipolla();
+    }
+}
+struct Cipolla2{
+    ll n,p,ii;
+    struct comp{
+        ll x,y;
+        comp (ll xx=0,ll yy=0){ x=xx; y=yy; return ;}
+    };
+
+    comp operator *(comp a,comp b){return comp(add(mul(a.x,b.x),mul(a.y,mul(b.y,ii))),add(mul(a.x,b.y),mul(a.y,b.x)));}
+    void cipolla(){
+        int a=rand()%p;
+        while(!a || !find(a)) a=rand()%p;
+        ii=sub(mul(a,a),n);
+        int x1,x2;
+        x1=cqp(comp(a,1),(p+1)/2);
+        x2=p-x1;
+        if(x1>x2) swap(x1,x2);
     }
 }
 signed main()

@@ -1,12 +1,8 @@
 #include <bits/stdc++.h>
 typedef long long ll;
-typedef long double ld;
-typedef unsigned long long ull;
 #define maxN 1000005
 #define maxK 10000005
-#define mod 1000000007
 #define INF 0x3f3f3f3f
-#define eps 1e-6
 using namespace std;
 int n,m,head[maxN*2],tot;
 int dfn[maxN*2],low[maxN*2],cnt,col;
