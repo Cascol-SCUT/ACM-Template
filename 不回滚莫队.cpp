@@ -30,8 +30,8 @@ int main()
     ios::sync_with_stdio(0);
     cin.tie(0);
     cin>>n;
-    int len=sqrt(n);
-    for(int i=1;i<=n;++i) b[i]=(i-1)/len+1;
+    int sqn=sqrt(n);
+    for(int i=1;i<=n;++i) b[i]=(i-1)/sqn+1;
     int x;
     for(int i=1;i<=n;++i){
         cin>>x;
@@ -46,7 +46,7 @@ int main()
     sort(q+1,q+m+1);
     for(int i=1,j=1;j<=b[n]&&i<=n;++j)
     {
-        int br=min(j*len,n),l=br+1,r=l-1,ans=0;
+        int br=min(j*sqn,n),l=br+1,r=l-1,ans=0;
         cr=0;
         for(;b[q[i].l]==j;++i)
         {

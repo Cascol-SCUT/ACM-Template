@@ -6,8 +6,9 @@ typedef long double ld;
 #define mod 1000000007
 #define eps 1e-10
 using namespace std;
-int rk[maxN],sa[maxN],lcp[maxN],tmp[maxN],n,k;
 string s;
+int rk[maxN],sa[maxN],lcp[maxN],tmp[maxN],n,k;
+// rk[idx]=排名  sa[排名]=idx
 bool compare_sa(int i,int j)
 {
 	if(rk[i]!=rk[j]) return rk[i]<rk[j];
@@ -36,10 +37,10 @@ void construct_sa(string s,int *sa)
 }
 void construct_lcp(string s,int *sa,int *lcp)
 {
-	int n=s.length();
+	// lcp[i.j]=min({lcp[i,i+1],lcp[i+1,i+2],....})
+	// 这里定义的 lcp[i]=lcp[i,i-1]
 	int h=0;
-	lcp[0]=0;
-	for(int i=0;i<n;++i){
+	for(int i=0,n=s.length();i<n;++i){
 		int j=sa[rk[i]-1];
 		if(h>0) --h;
 		while(i+h<n&&j+h<n&&s[i+h]==s[j+h]) ++h;

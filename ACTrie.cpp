@@ -6,102 +6,87 @@ typedef unsigned long long ull;
 #define mod 1000000007
 #define INF 1000000009
 using namespace std;
-int ch[maxN][26], cnt[maxN], fail[maxN],nxt[maxN];
-bool ed[maxN];
-vector<int> fi;
 unordered_map<int, string> mp;
 string s;
-int n, tot;
-
-inline void clear(int v)
-{
-	for(int i=0;i<26;++i) ch[v][i]=0;
-	cnt[v]=fail[v]=nxt[v]=0;
-}
-void insert(string x)
-{
-	int p = 0;
-	for (int i = 0; i < x.length(); ++i)
+int n;
+struct ACTrie{
+	int tot;
+	int ch[maxN][26], cnt[maxN], fail[maxN],nxt[maxN];
+	bool ed[maxN];
+	vector<int> fi;
+	inline void clear(int v)
 	{
-		int t = x[i] - 'a';
-		if (ch[p][t]) p = ch[p][t];
-		else {
-			ch[p][t] = ++tot;
-			p = tot;clear(tot);
-		}
+		for(int i=0;i<26;++i) ch[v][i]=0;
+		cnt[v]=fail[v]=nxt[v]=0;
 	}
-	//cout << "p: " << p << endl;
-	ed[p] = true; fi.push_back(p);
-	mp[p] = x;
-}
-void buildfail()
-{
-	queue<int> q;
-	for (int i = 0; i < 26; ++i)
-		if (ch[0][i]) {
-			fail[ch[0][i]] = 0;
-			q.push(ch[0][i]);
+	void insert(string x){
+		int p = 0;
+		for (int i = 0; i < x.length(); ++i){
+			int t = x[i] - 'a';
+			if(!ch[p][t]) ch[p][t]=++tot,clear(tot);
+			p = ch[p][t];
 		}
-	while (!q.empty())
-	{
-		int u = q.front(); q.pop();
-		for (int i = 0; i < 26; ++i) {
-			if (ch[u][i]) {
-				fail[ch[u][i]] = ch[fail[u]][i];
-				nxt[ch[u][i]]=ed[fail[ch[u][i]]]?fail[ch[u][i]]:nxt[fail[ch[u][i]]];
-				q.push(ch[u][i]);
+		ed[p] = true; fi.push_back(p);
+		mp[p] = x;
+	}
+	void buildfail(){ //找到最长匹配的后缀
+		queue<int> q;
+		for (int i = 0; i < 26; ++i)
+			if (ch[0][i]) {
+				fail[ch[0][i]] = 0;
+				q.push(ch[0][i]);
 			}
-			else
-				ch[u][i] = ch[fail[u]][i];
+		while (!q.empty()){
+			int u = q.front(); q.pop();
+			for (int i = 0; i < 26; ++i) {
+				if (ch[u][i]) {
+					fail[ch[u][i]] = ch[fail[u]][i];
+					nxt[ch[u][i]]=ed[fail[ch[u][i]]]?fail[ch[u][i]]:nxt[fail[ch[u][i]]];
+					q.push(ch[u][i]);
+				}
+				else
+					ch[u][i] = ch[fail[u]][i];
+			}
 		}
 	}
-}
-void find(string s)
-{
-	int p = 0, ans = 0;
-	for (int i = 0; i < s.length(); ++i) {
-		int t = s[i] - 'a';
-		p = ch[p][t];
-		for (int cur = p; cur; cur = nxt[cur]) {
-			if (ed[cur]) cnt[cur]++;
+	void find(string s){
+		int p = 0, ans = 0;
+		for (int i = 0; i < s.length(); ++i) {
+			int t = s[i] - 'a';
+			p = ch[p][t];
+			for (int cur = p; cur; cur = nxt[cur]) {
+				if (ed[cur]) cnt[cur]++;
+			}
 		}
 	}
-}
-void init()
-{
-    // memset(fail,0,sizeof(fail));
-    // memset(nxt,0,sizeof(nxt));
-	// memset(cnt, 0, sizeof(cnt));
-	// memset(ch, 0, sizeof(ch));
-	// memset(ed, 0, sizeof(ed));
-	clear(0);
-	fi.clear();
-	tot = 0;
-}
+	void init(){
+		clear(0); fi.clear(); tot = 0;
+	}
+}ac;
 void solve()
 {
 	while (cin >> n && n != 0) {
-		init();
+		ac.init();
 		for (int i = 1; i <= n; ++i) {
 			cin >> s;
-			insert(s);
+			ac.insert(s);
 		}
-		buildfail();
+		ac.buildfail();
 		cin >> s;
-		find(s);
+		ac.find(s);
 		string ans = "";
 		int nt = -1, id = -1;
-		for (int i = 0; i < fi.size(); ++i) {
-			if (cnt[fi[i]] > nt) {
-				nt = cnt[fi[i]];
-				ans = mp[fi[i]];
+		for (int i = 0; i < ac.fi.size(); ++i) {
+			if (ac.cnt[ac.fi[i]] > nt) {
+				nt = ac.cnt[ac.fi[i]];
+				ans = mp[ac.fi[i]];
 				id = i;
 			}
 		}
 		cout << nt << endl << ans << endl;
-		for (int i = id + 1; i < fi.size(); ++i) {
-			if (cnt[fi[i]] == nt) {
-				cout << mp[fi[i]] << endl;
+		for (int i = id + 1; i < ac.fi.size(); ++i) {
+			if (ac.cnt[ac.fi[i]] == nt) {
+				cout << mp[ac.fi[i]] << endl;
 			}
 		}
 	}

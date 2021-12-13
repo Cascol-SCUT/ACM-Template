@@ -11,7 +11,7 @@ void init()
 {
 	cin>>s;
 }
-void solve()
+void Lyndon()
 {
 	int i=0,j,k;
 	int ans=0;
@@ -27,7 +27,7 @@ void solve()
 		while(i<=j)
 		{
 			i=i+k-j;
-			ans^=i;
+			ans^=i; //分割点
 		}
 	}
 	cout<<ans<<endl;

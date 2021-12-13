@@ -67,10 +67,9 @@ void dfs2(int x,int topf)
 }
 int ask(int x,int k)
 {
-	// cout<<"ask: "<<x<<" "<<k<<endl;
 	if(!k) return x;
-	x=f[x][Log[k]];k-=1<<Log[k];k-=h[x]-h[top[x]];x=top[x];
-	// cout<<x<<" "<<k<<" ";
+	x=f[x][Log[k]]; k-=1<<Log[k];
+	k-=h[x]-h[top[x]]; x=top[x];
 	if(k>0) return u[x][k];
 	else return d[x][-k];
 }
